@@ -259,6 +259,17 @@ class KeysightDSOX1102G(Instrument):
         """ Autoscale displayed channels. """
         self.write(":autoscale")
 
+    #################
+    #    Measure    #
+    #################
+
+    def measure_vrms(self, channel):
+        """ Autoscale displayed channels. """
+        data = self.ask(":measure:vrms? display,ac,"+channel)
+
+        return float(data)       
+
+
     ##################
     # Timebase Setup #
     ##################
