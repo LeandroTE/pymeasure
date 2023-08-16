@@ -264,11 +264,31 @@ class KeysightDSOX1102G(Instrument):
     #################
 
     def measure_vrms(self, channel):
-        """ Autoscale displayed channels. """
+        """ Get measure from VRMS full display """
         data = self.ask(":measure:vrms? display,ac,"+channel)
 
         return float(data)       
+    
+    #################
+    #      DVM      #
+    #################
 
+    def dvm_set(self, channel,mode):
+        """ Set DMV
+            - "Channel": "channel to set dvm (str)
+            - "MODE": of operation (str) 
+                - ACRMs — displays the root-mean-square value of the acquired data, with the DC component removed.
+                - DC — displays the DC value of the acquired data.
+                - DCRMs — displays the root-mean-square value of the acquired data.
+                - FREQuency — displays the frequency counter measurement. """
+        self.write(":dvm:mode "+mode)
+        self.write(":dvm:source "+channel)
+
+    def dvm_get_current(self):
+        """ Autoscale displayed channels. """
+        data = self.ask("dvm:current?")
+        return float(data)    
+  
 
     ##################
     # Timebase Setup #
